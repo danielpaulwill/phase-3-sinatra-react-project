@@ -26,10 +26,17 @@ class ApplicationController < Sinatra::Base
     filtered_name.to_json
   end
 
+  get "/task-category/:id" do
+    task = Task.find(params[:id])
+    task.category.name.to_json
+  end
+
   delete "/task/:id" do
     task = Task.find(params[:id])
     task.destroy
     task.to_json
   end
+
+
 
 end
