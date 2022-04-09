@@ -1,14 +1,11 @@
 class ApplicationController < Sinatra::Base
   set :default_content_type, 'application/json'
   
-  # Add your routes here
-  get "/" do
-    { message: "Good luck with your project!" }.to_json
-  end
-
   get "/tasks" do
     tasks = Task.all
-    tasks.to_json
+    tasks.to_json(only: [:id, :name, :category_id, :description], include: {
+      category: { only: [:name]}
+    })
   end
 
   get "/categories" do
@@ -18,12 +15,16 @@ class ApplicationController < Sinatra::Base
 
   get "/app-names" do
     all_names = []
+    final_names = []
     all_tasks = Task.all
     all_tasks.each do |task|
-      all_names << task.name
+      all_names << task.name.downcase
     end
     filtered_name = all_names.uniq
-    filtered_name.to_json
+    filtered_name.each do |name|
+      final_names << name.capitalize
+    end
+    final_names.to_json
   end
 
   get "/task-category/:id" do
@@ -37,6 +38,15 @@ class ApplicationController < Sinatra::Base
     task.to_json
   end
 
-
+  post '/tasks' do
+    new_task = Task.create(
+      name: params[:name],
+      category_id: params[:category_id],
+      description: params[:description]
+    )
+    new_task.to_json(only: [:id, :name, :category_id, :description], include: {
+      category: { only: [:name]}
+    })
+  end
 
 end
