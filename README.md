@@ -1,6 +1,7 @@
 # App Bug List
 
 App bug list is a task list for documenting bugs, future features, or new app ideas to be fixed or executed in the future.
+![ezgif com-gif-maker](https://user-images.githubusercontent.com/86324206/162861965-9e122eb9-b384-4136-835e-b93b7f867fbe.gif)
 
 ## Installation
 
