@@ -14,17 +14,7 @@ class ApplicationController < Sinatra::Base
   end
 
   get "/app-names" do
-    all_names = []
-    final_names = []
-    all_tasks = Task.all
-    all_tasks.each do |task|
-      all_names << task.name.downcase
-    end
-    filtered_name = all_names.uniq
-    filtered_name.each do |name|
-      final_names << name.capitalize
-    end
-    final_names.to_json
+    Task.current_apps.to_json
   end
 
   get "/task-category/:id" do
